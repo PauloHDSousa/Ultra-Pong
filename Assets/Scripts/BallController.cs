@@ -78,7 +78,6 @@ public class BallController : MonoBehaviour
             float y = HitFactorY(transform.position, col.transform.position, col.collider.bounds.size.y);
             rb.velocity = new Vector2(x, y).normalized * m_Speed;
 
-            StartCoroutine(Shake(0.1f, 0.1f));
 
             int r = Random.Range(0, m_HitSounds.Length);
             var audio = m_HitSounds[r];
@@ -95,7 +94,6 @@ public class BallController : MonoBehaviour
             float y = col.gameObject.name == "PlayerTop" ? -1 : 1;
             rb.velocity = new Vector2(x, y).normalized * m_Speed;
 
-            StartCoroutine(Shake(0.1f, 0.1f));
 
             int r = Random.Range(0, m_HitSounds.Length);
             var audio = m_HitSounds[r];
@@ -133,23 +131,4 @@ public class BallController : MonoBehaviour
         return (ballPos.x - racketPos.x) / racketWidth;
     }
 
-    public IEnumerator Shake(float duration, float magnitude)
-    {
-        if (m_CurrentCamera != null)
-        {
-            Vector3 orignalPosition = m_CurrentCamera.transform.position;
-            float elapsed = 0f;
-
-            while (elapsed < duration)
-            {
-                float x = Random.Range(-1f, 1f) * magnitude;
-                float y = Random.Range(-1f, 1f) * magnitude;
-
-                m_CurrentCamera.transform.position = new Vector3(x, y, -10f);
-                elapsed += Time.deltaTime;
-                yield return 0;
-            }
-            m_CurrentCamera.transform.position = orignalPosition;
-        }
-    }
 }
